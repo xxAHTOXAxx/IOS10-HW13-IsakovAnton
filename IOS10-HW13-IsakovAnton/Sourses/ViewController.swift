@@ -7,24 +7,7 @@
 
 import UIKit
 
-
-//struct Sections: Hashable {
-//    var name: String
-//
-//    var button: UIButton
-//}
-
-//    enum NamesSections: String {
-//        case AviMode = "Авирежим"
-//        case wiFi = "Wi-Fi"
-//        case bluetooth = "Bluetooth"
-//    }
-
-
-
 class ViewController: UIViewController {
-    
-    
     
     var sectionTitles = ["", "", ""]
     
@@ -104,45 +87,10 @@ extension ViewController: UITableViewDataSource {
         let text = sectionsData[indexPath.section][indexPath.row]
         let iconName = icons[indexPath.section * sectionTitles.count + indexPath.row]
        
-        
-//        switch indexPath.section {
-//        case 0:
-//            iconName = icons[indexPath.row]
-//            text = nameSection[indexPath.row]
-            
             let iconImage = UIImage(systemName: iconName)
             cell.imageView?.image = iconImage
             cell.titleLabel.text = text
-            
-//            if indexPath.row == 0 { // Проверяем, что это ячейка "Авирежим"
-//                cell.switchControl.isHidden = false // Показываем переключатель для ячейки "Авирежим"
-//                //                cell.switchControl.addTarget(self, action: #selector(airplaneModeSwitchValueChanged(_:)), for: .valueChanged)
-//                cell.switchControl.isOn = isAirplaneModeEnabled
-//            } else {
-//                cell.switchControl.isHidden = true // Скрываем переключатель для других ячеек
-//            }
-//
-//        case 1:
-//            iconName = icons[indexPath.row]
-//            text = nameSectionTwo[indexPath.row]
-//            cell.imageView?.image = UIImage(systemName: iconName)
-//            cell.titleLabel.text = text
-//            cell.switchControl.isHidden = true // Скрываем переключатель для ячеек во втором разделе
-//
-//        case 2:
-//            iconName = icons[indexPath.row]
-//            text = nameSectionThree[indexPath.row]
-//            cell.imageView?.image = UIImage(systemName: iconName)
-//            cell.titleLabel.text = text
-//            cell.switchControl.isHidden = true // Скрываем переключатель для ячеек в третьем разделе
-//
-//        default:
-//            return UITableViewCell()
-//        }
-//        return cell
-//    }
-            
-            
+        
             if indexPath.section == 0 && indexPath.row == 0 { // Проверяем, что это ячейка "Авирежим" в первой секции
                 cell.switchControl.isHidden = false // Показываем переключатель для ячейки "Авирежим"
                 cell.switchControl.addTarget(self, action: #selector(airplaneModeSwitchValueChanged(_:)), for: .valueChanged)
@@ -178,20 +126,27 @@ class SwitchCell: UITableViewCell {
         return switchControl
     }()
     
+    let arrowImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(systemName: "chevron.right"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        setupUI()
+        setupLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupUI() {
+    private func setupLayout() {
         contentView.addSubview(iconImageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(switchControl)
+        contentView.addSubview(arrowImageView)
         
         NSLayoutConstraint.activate([
             iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
@@ -204,48 +159,13 @@ class SwitchCell: UITableViewCell {
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             switchControl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            switchControl.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            switchControl.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
+            arrowImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            arrowImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 }
-
-
-//class SwitchCell: UITableViewCell {
-//    let titleLabel: UILabel = {
-//        let label = UILabel()
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        return label
-//    }()
-//
-//    let switchControl: UISwitch = {
-//        let switchControl = UISwitch()
-//        switchControl.translatesAutoresizingMaskIntoConstraints = false
-//        return switchControl
-//    }()
-//
-//    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-//        super.init(style: style, reuseIdentifier: reuseIdentifier)
-//
-//        setupUI()
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//
-//    private func setupUI() {
-//        contentView.addSubview(titleLabel)
-//        contentView.addSubview(switchControl)
-//
-//        NSLayoutConstraint.activate([
-//            switchControl.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-//            switchControl.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-//            titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 30), // Adjust the leading constraint to create spacing between icon and label
-//            titleLabel.trailingAnchor.constraint(equalTo: switchControl.leadingAnchor, constant: -10), // Adjust the trailing constraint to create spacing between icon and label
-//            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
-//        ])
-//    }
-//}
 
 extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -258,6 +178,60 @@ extension ViewController: UITableViewDelegate {
         return headerView
     }
 }
+
+class ArrowCell: UITableViewCell {
+    let iconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    let titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let arrowImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage(systemName: "chevron.right"))
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        setupLayout()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func setupLayout() {
+        contentView.addSubview(iconImageView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(arrowImageView)
+        
+        NSLayoutConstraint.activate([
+            
+            iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+            iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            iconImageView.widthAnchor.constraint(equalToConstant: 24),
+            iconImageView.heightAnchor.constraint(equalToConstant: 24),
+            
+            titleLabel.leadingAnchor.constraint(equalTo: iconImageView.trailingAnchor, constant: 10),
+            titleLabel.trailingAnchor.constraint(equalTo: arrowImageView.leadingAnchor, constant: -10),
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
+            arrowImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
+            arrowImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+        ])
+    }
+}
+
+
+
 
 
 //class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
