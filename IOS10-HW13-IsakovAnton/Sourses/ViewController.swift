@@ -13,7 +13,9 @@ class ViewController: UIViewController {
     
     private var sectionsData: [[String]] = []
     private var nameSection = ["Авирежим", "Wi-Fi", "Bluetooth", "Сотовая связь", "Режим модема", "VPN"]
-    private var icons = ["airplane", "wifi", "network", "antenna.radiowaves.left.and.right", "antenna.radiowaves.left.and.right", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network"]
+    private var icons = [
+        "airplane", "wifi.square.fill", "network", "antenna.radiowaves.left.and.right", "antenna.radiowaves.left.and.right", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network"
+    ]
     let nameSectionTwo = ["Уведомления", "Звуки", "Тактильные сигналы", "Не беспокоить", "Экранное время"]
     let nameSectionThree = ["Основные", "Пункт управления", "Экран и яркость", "Экран «Домой»", "Универсальный доступ", "Обои", "Siri и Поиск", "Face ID и код- пароль", "Экстренный вызов - SOS", "Уведомление о контакте", "Аккумулятор", "Конфиденциальность и безопасность"]
     
@@ -25,7 +27,6 @@ class ViewController: UIViewController {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.register(SwitchCell.self, forCellReuseIdentifier: "switchCell")
         tableView.delegate = self
-        //tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -47,6 +48,7 @@ class ViewController: UIViewController {
     private func setupHierarchy() {
         view.addSubview(tableView)
         tableView.dataSource = self
+        tableView.register(ArrowCell.self, forCellReuseIdentifier: "arrowCell")
     }
     
     private func setupLayout() {
@@ -66,46 +68,50 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
+        
         return sectionsData[section].count
-        //        switch section {
-//        case 0:
-//            return nameSection.count
-//        case 1:
-//            return nameSectionTwo.count
-//        case 2:
-//            return nameSectionThree.count
-//        default:
-//            return 0
-//        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "switchCell", for: indexPath) as! SwitchCell
-//        let iconName: String
-//        let text: String
+        
         let text = sectionsData[indexPath.section][indexPath.row]
         let iconName = icons[indexPath.section * sectionTitles.count + indexPath.row]
-       
-            let iconImage = UIImage(systemName: iconName)
-            cell.imageView?.image = iconImage
-            cell.titleLabel.text = text
         
-            if indexPath.section == 0 && indexPath.row == 0 { // Проверяем, что это ячейка "Авирежим" в первой секции
-                cell.switchControl.isHidden = false // Показываем переключатель для ячейки "Авирежим"
-                cell.switchControl.addTarget(self, action: #selector(airplaneModeSwitchValueChanged(_:)), for: .valueChanged)
-                cell.switchControl.isOn = isAirplaneModeEnabled
+        if indexPath.section == 0 && indexPath.row == 0 {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "switchCell", for: indexPath) as! SwitchCell
+            let iconImage = UIImage(systemName: iconName)
+            cell.iconImageView.image = iconImage
+            cell.titleLabel.text = text
+            cell.switchControl.isHidden = false
+            cell.arrowImageView.isHidden = true
+            cell.switchControl.isOn = isAirplaneModeEnabled
+            return cell
+        } else {
+            let cell = tableView.dequeueReusableCell(withIdentifier: "arrowCell", for: indexPath) as! ArrowCell
+            let iconImage = UIImage(systemName: iconName)
+            cell.iconImageView.image = iconImage
+            cell.titleLabel.text = text
+            cell.switchControl.isHidden = true
+            cell.arrowImageView.isHidden = false
+            
+            if text == "Wi-Fi" || text == "VPN" {
+                cell.additionalTextLabel.text = "Не подключен"
             } else {
-                cell.switchControl.isHidden = true // Скрываем переключатель для других ячеек
+                cell.additionalTextLabel.text = ""
+            }
+            
+            if text == "Bluetooth" {
+                cell.additionalTextLabel.text = "Вкл."
             }
             
             return cell
         }
-       @objc func airplaneModeSwitchValueChanged(_ sender: UISwitch) {
-            isAirplaneModeEnabled = sender.isOn
-            // Обработка изменения состояния авиарежима
-        }
     }
+        
+    @objc func airplaneModeSwitchValueChanged(_ sender: UISwitch) {
+        isAirplaneModeEnabled = sender.isOn
+    }
+}
 
 class SwitchCell: UITableViewCell {
     let iconImageView: UIImageView = {
@@ -135,6 +141,7 @@ class SwitchCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        setupHierarchy()
         setupLayout()
     }
     
@@ -142,11 +149,14 @@ class SwitchCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupLayout() {
+    private func setupHierarchy() {
         contentView.addSubview(iconImageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(switchControl)
         contentView.addSubview(arrowImageView)
+    }
+    
+    private func setupLayout() {
         
         NSLayoutConstraint.activate([
             iconImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
@@ -168,8 +178,9 @@ class SwitchCell: UITableViewCell {
 }
 
 extension ViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10  // Подстройте это значение, чтобы задать желаемое расстояние между секциями
+        return 10
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -192,15 +203,39 @@ class ArrowCell: UITableViewCell {
         return label
     }()
     
+    let switchControl: UISwitch = {
+            let switchControl = UISwitch()
+            switchControl.translatesAutoresizingMaskIntoConstraints = false
+            return switchControl
+        }()
+    
     let arrowImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "chevron.right"))
+        imageView.tintColor = .systemGray
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
+    }()
+    
+    let additionalTextLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = UIColor.lightGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let additionalTextLabelOnOff: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 14)
+        label.textColor = UIColor.lightGray
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        setupHierarchy()
         setupLayout()
     }
     
@@ -208,10 +243,15 @@ class ArrowCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupLayout() {
+    private func setupHierarchy() {
         contentView.addSubview(iconImageView)
         contentView.addSubview(titleLabel)
         contentView.addSubview(arrowImageView)
+        contentView.addSubview(additionalTextLabel)
+        contentView.addSubview(additionalTextLabelOnOff)
+    }
+    
+    private func setupLayout() {
         
         NSLayoutConstraint.activate([
             
@@ -225,149 +265,13 @@ class ArrowCell: UITableViewCell {
             titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
             
             arrowImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
-            arrowImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
+            arrowImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
+            additionalTextLabel.leadingAnchor.constraint(equalTo: arrowImageView.trailingAnchor, constant: -120),
+            additionalTextLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            
+            additionalTextLabelOnOff.leadingAnchor.constraint(equalTo: arrowImageView.trailingAnchor, constant: -10),
+            additionalTextLabelOnOff.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
         ])
     }
 }
-
-
-
-
-
-//class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
-//
-//    // MARK: - Outlets
-//
-//    let cellIdentifier = "Настройки"
-//    let sectionTitles = ["", "", ""]
-//    let section1Data = ["Авирежим", "W-Fi", "Bluetooth", "Сотовая связь", "Режим модема", "VPN"]
-//    let section2Data = ["Уведомления", "Звуки", "Тактильные сигналы", "Не беспокоить", "Экранное время"]
-//    let section3Data = ["Основные", "Пункт управления", "Экран и яркость", "Экран «Домой»", "Универсальный доступ", "Обои", "Siri и Поиск", "Face ID и код- пароль", "Экстренный вызов - SOS", "Уведомление о контакте", "Аккумулятор", "Конфиденциальность и безопасность"]
-//
-//    private lazy var tableView: UITableView = {
-//        let tableView = UITableView(frame: .zero, style: .grouped)
-//        tableView.translatesAutoresizingMaskIntoConstraints = false
-//        tableView.delegate = self
-//        tableView.dataSource = self
-//        tableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
-//        return tableView
-//    }()
-//
-//    // MARK: - Lifecycle
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        title = "Настройки"
-//        setupHierarchy()
-//        setupLayout ()
-//    }
-//
-//    // MARK: - Setup
-//
-//    private func setupHierarchy() {
-//        view.addSubview(tableView)
-//
-//    }
-//
-//    private func setupLayout () {
-//        NSLayoutConstraint.activate([
-//            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-//            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-//            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-//            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-//        ])
-//    }
-//
-//    func numberOfSections(in tableView: UITableView) -> Int {
-//        return sectionTitles.count
-//    }
-//
-//
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        switch section {
-//        case 0:
-//            return section1Data.count
-//        case 1:
-//            return section2Data.count
-//        case 2:
-//            return section3Data.count
-//        default:
-//            return 0
-//        }
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath)
-//
-//        switch indexPath.section {
-//        case 0:
-//            cell.textLabel?.text = section1Data[indexPath.row]
-//        case 1:
-//            cell.textLabel?.text = section2Data[indexPath.row]
-//        case 2:
-//            cell.textLabel?.text = section3Data[indexPath.row]
-//        default:
-//            break
-//        }
-//
-//        return cell
-//    }
-//
-//    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-//        return sectionTitles[section]
-//    }
-//
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        tableView.deselectRow(at: indexPath, animated: true)
-//
-//        // Обработка нажатия на ячейку
-//        switch indexPath.section {
-//        case 0:
-//            switch indexPath.row {
-//            case 0:
-//                // Обработка нажатия на первый элемент секции 1
-//                break
-//            case 1:
-//                // Обработка нажатия на второй элемент секции 1
-//                break
-//            case 2:
-//                // Обработка нажатия на третий элемент секции 1
-//                break
-//            default:
-//                break
-//            }
-//        case 1:
-//            switch indexPath.row {
-//            case 0:
-//                // Обработка нажатия на первый элемент секции 2
-//                break
-//            case 1:
-//                // Обработка нажатия на второй элемент секции 2
-//                break
-//            case 2:
-//                // Обработка нажатия на третий элемент секции 2
-//                break
-//            default:
-//                break
-//            }
-//        case 2:
-//            switch indexPath.row {
-//            case 0:
-//                // Обработка нажатия на первый элемент секции 3
-//                break
-//            case 1:
-//                // Обработка нажатия на второй элемент секции 3
-//                break
-//            case 2:
-//                // Обработка нажатия на третий элемент секции 3
-//                break
-//            default:
-//                break
-//            }
-//        default:
-//            break
-//        }
-//    }
-//}
-//
-
