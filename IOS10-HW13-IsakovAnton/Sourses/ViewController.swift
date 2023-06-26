@@ -1,23 +1,155 @@
-//
-//  ViewController.swift
-//  IOS10-HW13-IsakovAnton
-//
-//  Created by Антон Исаков on 23.06.2023.
-//
-
 import UIKit
+
+struct Icon {
+    let image: UIImage // Изображение иконки
+    let name: String // Название иконки
+    let iconBackgroundColor: UIColor // Цвет фона иконки
+    //let optionType: OptionType // Тип опции иконки
+    
+//    enum OptionType {
+//        case switched // Переключатель
+//        case described(state: ConnectionState) // Описание с состоянием
+//        case general // Общая опция
+//    }
+//
+//    // Возможные состояния подключения
+//    enum ConnectionState {
+//        case on
+//        case off
+//        case notConnected
+//        case none
+//    }
+}
+
+extension Icon {
+    static var iconCustom: [[Icon]] = [
+        // Первая секция
+        [
+            Icon(image: UIImage(systemName: "airplane") ?? UIImage(), // Изображение с системным именем "airplane" (если не удалось загрузить, используется пустое изображение)
+                 name: "Авиарежим",
+                 iconBackgroundColor: .systemOrange,
+//                 optionType: .switched), // Иконка с переключателем
+            
+            Icon(image: UIImage(systemName: "wifi") ?? UIImage(),
+                 name: "Wi-Fi",
+                 iconBackgroundColor: .systemBlue,
+//                 optionType: .described(state: .notConnected)), // Иконка с описанием состояния "notConnected"
+            
+            Icon(image: UIImage(named: "bluetooth")?.withTintColor(.white) ?? UIImage(),
+                 name: "Bluetooth",
+                 iconBackgroundColor: .systemBlue,
+//                 optionType: .described(state: .on)), // Иконка с описанием состояния "on"
+            
+            Icon(image: UIImage(systemName: "antenna.radiowaves.left.and.right")?.withConfiguration(UIImage.SymbolConfiguration(weight: .semibold)) ?? UIImage(),
+                 name: "Сотовая связь",
+                 iconBackgroundColor: .systemGreen,
+//                 optionType: .general), // Общая иконка без специального типа опции
+            
+            Icon(image: UIImage(systemName: "personalhotspot")?.withConfiguration(UIImage.SymbolConfiguration(weight: .bold)) ?? UIImage(),
+                 name: "Режим модема",
+                 iconBackgroundColor: .systemGreen,
+//                 optionType: .described(state: .none)), // Иконка с описанием состояния "none"
+            
+            Icon(image: UIImage(named: "vpn")?.withTintColor(.white) ?? UIImage(),
+                 name: "VPN",
+                 iconBackgroundColor: .systemBlue,
+//                 optionType: .switched) // Иконка с переключателем
+        ],
+        [
+            Icon(image: UIImage(systemName: "bell") ?? UIImage(),
+                 name: "Уведомления",
+                 iconBackgroundColor: .systemOrange,
+//                 optionType: .switched),
+            Icon(image: UIImage(systemName: "") ?? UIImage(),
+                 name: "Звуки, тактильные сигналы",
+                 iconBackgroundColor: .systemPink,
+//                 optionType: .general),
+            
+            Icon(image: UIImage(systemName: "") ?? UIImage(),
+                 name: "Не беспокоить",
+                 iconBackgroundColor: .systemIndigo,
+//                 optionType: .general),
+            
+            Icon(image: UIImage(systemName: "") ?? UIImage(),
+                 name: "Экранное время",
+                 iconBackgroundColor: .systemIndigo,
+//                 optionType: .general)
+        ],
+        [
+            Icon(image: UIImage(systemName: "") ?? UIImage(),
+                 name: "Основные",
+                 iconBackgroundColor: .systemGray2,
+//                 optionType: .general),
+            
+            Icon(image: UIImage(systemName: "switch.2")?.withConfiguration(UIImage.SymbolConfiguration(weight: .regular)) ?? UIImage(),
+                 name: "Пункт управления",
+                 iconBackgroundColor: .systemGray2,
+//                 optionType: .general),
+            
+            Icon(image: UIImage(systemName: "textformat.size")?.withConfiguration(UIImage.SymbolConfiguration(weight: .regular)) ?? UIImage(),
+                 name: "Экран и яркость",
+                 iconBackgroundColor: .systemBlue,
+//                 optionType: .general),
+            
+            Icon(image: UIImage(systemName: "") ?? UIImage(),
+                 name: "Экран «Домой»",
+                 iconBackgroundColor: nil,
+//                 optionType: .general),
+            
+            Icon(image: UIImage(systemName: "") ?? UIImage(),
+                 name: "Универсальный доступ",
+                 iconBackgroundColor: .systemBlue,
+//                 optionType: .general),
+            
+            Icon(image: UIImage(systemName: "") ?? UIImage(),
+                 name: "Oon",
+                 iconBackgroundColor: .systemCyan,
+//                 optionType: .general),
+            
+            Icon(image: UIImage(named: "") ?? UIImage(),
+                 name: "Siri и Поиск",
+                 iconBackgroundColor: nil,
+//                 optionType: .general),
+            
+            Icon(image: UIImage(systemName: "faceid") ?? UIImage(),
+                 name: "Face ID код-пароль",
+                 iconBackgroundColor: .systemCyan,
+//                 optionType: .general),
+            
+            Icon(image: UIImage(systemName: "sos") ?? UIImage(),
+                 name: "Экстренный вызов - SoS",
+                 iconBackgroundColor: .systemRed,
+//                 optionType: .general),
+            
+            Icon(image: UIImage(systemName: "") ?? UIImage(),
+                 name: "Уведомление о контакте",
+                 iconBackgroundColor: .white,
+//                 optionType: .general),
+            
+            Icon(image: UIImage(systemName: "battery.100") ?? UIImage(),
+                 name: "Аккумулятор",
+                 iconBackgroundColor: .systemGreen,
+//                 optionType: .general),
+            
+            Icon(image: UIImage(systemName: "") ?? UIImage(),
+                 name: "Конфиденциальность и безопасность",
+                 iconBackgroundColor: .systemBlue,
+//                 optionType: .general)
+        ]
+    ]
+}
 
 class ViewController: UIViewController {
     
     var sectionTitles = ["", "", ""]
     
     private var sectionsData: [[String]] = []
-    private var nameSection = ["Авирежим", "Wi-Fi", "Bluetooth", "Сотовая связь", "Режим модема", "VPN"]
-    private var icons = [
-        "airplane", "wifi.square.fill", "network", "antenna.radiowaves.left.and.right", "antenna.radiowaves.left.and.right", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network"
-    ]
-    let nameSectionTwo = ["Уведомления", "Звуки", "Тактильные сигналы", "Не беспокоить", "Экранное время"]
-    let nameSectionThree = ["Основные", "Пункт управления", "Экран и яркость", "Экран «Домой»", "Универсальный доступ", "Обои", "Siri и Поиск", "Face ID и код- пароль", "Экстренный вызов - SOS", "Уведомление о контакте", "Аккумулятор", "Конфиденциальность и безопасность"]
+//    private var nameSection = ["Авирежим", "Wi-Fi", "Bluetooth", "Сотовая связь", "Режим модема", "VPN"]
+//     private var icons =
+//            "airplane", "wifi.square.fill", "network", "antenna.radiowaves.left.and.right", "antenna.radiowaves.left.and.right", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network"
+//    ]
+//    let nameSectionTwo = ["Уведомления", "Звуки", "Тактильные сигналы", "Не беспокоить", "Экранное время"]
+//    let nameSectionThree = ["Основные", "Пункт управления", "Экран и яркость", "Экран «Домой»", "Универсальный доступ", "Обои", "Siri и Поиск", "Face ID и код- пароль", "Экстренный вызов - SOS", "Уведомление о контакте", "Аккумулятор", "Конфиденциальность и безопасность"]
     
     private var isAirplaneModeEnabled = false
     
@@ -107,7 +239,7 @@ extension ViewController: UITableViewDataSource {
             return cell
         }
     }
-        
+    
     @objc func airplaneModeSwitchValueChanged(_ sender: UISwitch) {
         isAirplaneModeEnabled = sender.isOn
     }
@@ -204,10 +336,10 @@ class ArrowCell: UITableViewCell {
     }()
     
     let switchControl: UISwitch = {
-            let switchControl = UISwitch()
-            switchControl.translatesAutoresizingMaskIntoConstraints = false
-            return switchControl
-        }()
+        let switchControl = UISwitch()
+        switchControl.translatesAutoresizingMaskIntoConstraints = false
+        return switchControl
+    }()
     
     let arrowImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "chevron.right"))
