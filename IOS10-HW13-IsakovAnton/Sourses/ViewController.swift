@@ -1,156 +1,110 @@
 import UIKit
 
 struct Icon {
-    let image: UIImage // Изображение иконки
+    let image: UIImage? // Изображение иконки
     let name: String // Название иконки
-    let iconBackgroundColor: UIColor // Цвет фона иконки
-    //let optionType: OptionType // Тип опции иконки
-    
-//    enum OptionType {
-//        case switched // Переключатель
-//        case described(state: ConnectionState) // Описание с состоянием
-//        case general // Общая опция
-//    }
-//
-//    // Возможные состояния подключения
-//    enum ConnectionState {
-//        case on
-//        case off
-//        case notConnected
-//        case none
-//    }
+    let iconBackgroundColor: UIColor? // Цвет фона иконки
 }
 
 extension Icon {
     static var iconCustom: [[Icon]] = [
-        // Первая секция
         [
-            Icon(image: UIImage(systemName: "airplane") ?? UIImage(), // Изображение с системным именем "airplane" (если не удалось загрузить, используется пустое изображение)
+            Icon(image: UIImage(systemName: "airplane") ?? UIImage(),
                  name: "Авиарежим",
-                 iconBackgroundColor: .systemOrange,
-//                 optionType: .switched), // Иконка с переключателем
+                 iconBackgroundColor: .systemOrange),
             
             Icon(image: UIImage(systemName: "wifi") ?? UIImage(),
                  name: "Wi-Fi",
-                 iconBackgroundColor: .systemBlue,
-//                 optionType: .described(state: .notConnected)), // Иконка с описанием состояния "notConnected"
+                 iconBackgroundColor: .systemBlue),
             
             Icon(image: UIImage(named: "bluetooth")?.withTintColor(.white) ?? UIImage(),
                  name: "Bluetooth",
-                 iconBackgroundColor: .systemBlue,
-//                 optionType: .described(state: .on)), // Иконка с описанием состояния "on"
+                 iconBackgroundColor: .systemBlue),
             
             Icon(image: UIImage(systemName: "antenna.radiowaves.left.and.right")?.withConfiguration(UIImage.SymbolConfiguration(weight: .semibold)) ?? UIImage(),
                  name: "Сотовая связь",
-                 iconBackgroundColor: .systemGreen,
-//                 optionType: .general), // Общая иконка без специального типа опции
+                 iconBackgroundColor: .systemGreen),
             
             Icon(image: UIImage(systemName: "personalhotspot")?.withConfiguration(UIImage.SymbolConfiguration(weight: .bold)) ?? UIImage(),
                  name: "Режим модема",
-                 iconBackgroundColor: .systemGreen,
-//                 optionType: .described(state: .none)), // Иконка с описанием состояния "none"
+                 iconBackgroundColor: .systemGreen),
             
             Icon(image: UIImage(named: "vpn")?.withTintColor(.white) ?? UIImage(),
                  name: "VPN",
-                 iconBackgroundColor: .systemBlue,
-//                 optionType: .switched) // Иконка с переключателем
+                 iconBackgroundColor: .systemBlue),
         ],
         [
             Icon(image: UIImage(systemName: "bell") ?? UIImage(),
                  name: "Уведомления",
-                 iconBackgroundColor: .systemOrange,
-//                 optionType: .switched),
-            Icon(image: UIImage(systemName: "") ?? UIImage(),
+                 iconBackgroundColor: .systemOrange),
+
+            Icon(image: UIImage(systemName: "speaker") ?? UIImage(),
                  name: "Звуки, тактильные сигналы",
-                 iconBackgroundColor: .systemPink,
-//                 optionType: .general),
+                 iconBackgroundColor: .systemPink),
             
-            Icon(image: UIImage(systemName: "") ?? UIImage(),
+            Icon(image: UIImage(systemName: "wifi") ?? UIImage(),
                  name: "Не беспокоить",
-                 iconBackgroundColor: .systemIndigo,
-//                 optionType: .general),
+                 iconBackgroundColor: .systemIndigo),
             
-            Icon(image: UIImage(systemName: "") ?? UIImage(),
+            Icon(image: UIImage(systemName: "wifi") ?? UIImage(),
                  name: "Экранное время",
-                 iconBackgroundColor: .systemIndigo,
-//                 optionType: .general)
+                 iconBackgroundColor: .systemIndigo)
         ],
         [
-            Icon(image: UIImage(systemName: "") ?? UIImage(),
+            Icon(image: UIImage(systemName: "wifi") ?? UIImage(),
                  name: "Основные",
-                 iconBackgroundColor: .systemGray2,
-//                 optionType: .general),
+                 iconBackgroundColor: .systemGray2),
             
             Icon(image: UIImage(systemName: "switch.2")?.withConfiguration(UIImage.SymbolConfiguration(weight: .regular)) ?? UIImage(),
                  name: "Пункт управления",
-                 iconBackgroundColor: .systemGray2,
-//                 optionType: .general),
+                 iconBackgroundColor: .systemGray2),
             
             Icon(image: UIImage(systemName: "textformat.size")?.withConfiguration(UIImage.SymbolConfiguration(weight: .regular)) ?? UIImage(),
                  name: "Экран и яркость",
-                 iconBackgroundColor: .systemBlue,
-//                 optionType: .general),
+                 iconBackgroundColor: .systemBlue),
             
-            Icon(image: UIImage(systemName: "") ?? UIImage(),
+            Icon(image: UIImage(systemName: "wifi") ?? UIImage(),
                  name: "Экран «Домой»",
-                 iconBackgroundColor: nil,
-//                 optionType: .general),
+                 iconBackgroundColor: nil),
             
-            Icon(image: UIImage(systemName: "") ?? UIImage(),
+            Icon(image: UIImage(systemName: "wifi") ?? UIImage(),
                  name: "Универсальный доступ",
-                 iconBackgroundColor: .systemBlue,
-//                 optionType: .general),
+                 iconBackgroundColor: .systemBlue),
             
-            Icon(image: UIImage(systemName: "") ?? UIImage(),
-                 name: "Oon",
-                 iconBackgroundColor: .systemCyan,
-//                 optionType: .general),
-            
+            Icon(image: UIImage(systemName: "wifi") ?? UIImage(),
+                 name: "Обои",
+                 iconBackgroundColor: .systemCyan),
+
             Icon(image: UIImage(named: "") ?? UIImage(),
                  name: "Siri и Поиск",
-                 iconBackgroundColor: nil,
-//                 optionType: .general),
-            
+                 iconBackgroundColor: nil),
+
             Icon(image: UIImage(systemName: "faceid") ?? UIImage(),
                  name: "Face ID код-пароль",
-                 iconBackgroundColor: .systemCyan,
-//                 optionType: .general),
-            
+                 iconBackgroundColor: .systemCyan),
+
             Icon(image: UIImage(systemName: "sos") ?? UIImage(),
                  name: "Экстренный вызов - SoS",
-                 iconBackgroundColor: .systemRed,
-//                 optionType: .general),
-            
-            Icon(image: UIImage(systemName: "") ?? UIImage(),
+                 iconBackgroundColor: .systemRed),
+
+            Icon(image: UIImage(systemName: "wifi") ?? UIImage(),
                  name: "Уведомление о контакте",
-                 iconBackgroundColor: .white,
-//                 optionType: .general),
+                 iconBackgroundColor: .white),
             
             Icon(image: UIImage(systemName: "battery.100") ?? UIImage(),
                  name: "Аккумулятор",
-                 iconBackgroundColor: .systemGreen,
-//                 optionType: .general),
+                 iconBackgroundColor: .systemGreen),
             
-            Icon(image: UIImage(systemName: "") ?? UIImage(),
+            Icon(image: UIImage(systemName: "wifi") ?? UIImage(),
                  name: "Конфиденциальность и безопасность",
-                 iconBackgroundColor: .systemBlue,
-//                 optionType: .general)
+                 iconBackgroundColor: .systemBlue),
         ]
     ]
 }
 
 class ViewController: UIViewController {
     
-    var sectionTitles = ["", "", ""]
-    
-    private var sectionsData: [[String]] = []
-//    private var nameSection = ["Авирежим", "Wi-Fi", "Bluetooth", "Сотовая связь", "Режим модема", "VPN"]
-//     private var icons =
-//            "airplane", "wifi.square.fill", "network", "antenna.radiowaves.left.and.right", "antenna.radiowaves.left.and.right", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network", "network"
-//    ]
-//    let nameSectionTwo = ["Уведомления", "Звуки", "Тактильные сигналы", "Не беспокоить", "Экранное время"]
-//    let nameSectionThree = ["Основные", "Пункт управления", "Экран и яркость", "Экран «Домой»", "Универсальный доступ", "Обои", "Siri и Поиск", "Face ID и код- пароль", "Экстренный вызов - SOS", "Уведомление о контакте", "Аккумулятор", "Конфиденциальность и безопасность"]
-    
+    private var sectionsData: [[Icon]] = []
     private var isAirplaneModeEnabled = false
     
     // MARK: - Outlets
@@ -172,7 +126,7 @@ class ViewController: UIViewController {
         navigationController?.navigationBar.prefersLargeTitles = true
         setupHierarchy ()
         setupLayout()
-        sectionsData = [nameSection, nameSectionTwo, nameSectionThree]
+        sectionsData = Icon.iconCustom
     }
     
     // MARK: - Lifecycle
@@ -181,6 +135,7 @@ class ViewController: UIViewController {
         view.addSubview(tableView)
         tableView.dataSource = self
         tableView.register(ArrowCell.self, forCellReuseIdentifier: "arrowCell")
+        //tableView.register(SwitchCell.self, forCellReuseIdentifier: "switchCell")
     }
     
     private func setupLayout() {
@@ -196,7 +151,7 @@ class ViewController: UIViewController {
 extension ViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return sectionTitles.count
+        return Icon.iconCustom.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -206,36 +161,37 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let text = sectionsData[indexPath.section][indexPath.row]
-        let iconName = icons[indexPath.section * sectionTitles.count + indexPath.row]
+        let iconSection = Icon.iconCustom[indexPath.section]
+           let icon = iconSection[indexPath.row]
+           let iconName = icon.name
+           
+           if indexPath.section == 0 && indexPath.row == 0 {
+               let cell = tableView.dequeueReusableCell(withIdentifier: "switchCell", for: indexPath) as! SwitchCell
+               let iconImage = UIImage(systemName: iconName)
+               cell.iconImageView.image = iconImage
+               cell.titleLabel.text = icon.name
+               cell.switchControl.isHidden = false
+               cell.arrowImageView.isHidden = true
+               cell.switchControl.isOn = isAirplaneModeEnabled
+               cell.switchControl.addTarget(self, action: #selector(airplaneModeSwitchValueChanged(_:)), for: .valueChanged)
+               return cell
+           } else {
+               let cell = tableView.dequeueReusableCell(withIdentifier: "arrowCell", for: indexPath) as! ArrowCell
+               let iconImage = UIImage(systemName: iconName)
+               cell.iconImageView.image = iconImage
+               cell.titleLabel.text = icon.name
+               cell.switchControl.isHidden = true
+               cell.arrowImageView.isHidden = false
+               cell.additionalTextLabel.text = ""
         
-        if indexPath.section == 0 && indexPath.row == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "switchCell", for: indexPath) as! SwitchCell
-            let iconImage = UIImage(systemName: iconName)
-            cell.iconImageView.image = iconImage
-            cell.titleLabel.text = text
-            cell.switchControl.isHidden = false
-            cell.arrowImageView.isHidden = true
-            cell.switchControl.isOn = isAirplaneModeEnabled
-            return cell
-        } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "arrowCell", for: indexPath) as! ArrowCell
-            let iconImage = UIImage(systemName: iconName)
-            cell.iconImageView.image = iconImage
-            cell.titleLabel.text = text
-            cell.switchControl.isHidden = true
-            cell.arrowImageView.isHidden = false
-            
-            if text == "Wi-Fi" || text == "VPN" {
-                cell.additionalTextLabel.text = "Не подключен"
-            } else {
-                cell.additionalTextLabel.text = ""
-            }
-            
-            if text == "Bluetooth" {
-                cell.additionalTextLabel.text = "Вкл."
-            }
-            
+               if iconName == "Wi-Fi" || iconName == "VPN" {
+                   cell.additionalTextLabel.text = "Не подключен"
+               } else if iconName == "Bluetooth" {
+                   cell.additionalTextLabel.text = "Вкл."
+               } else {
+                   cell.additionalTextLabel.text = ""
+               }
+               
             return cell
         }
     }
@@ -312,7 +268,7 @@ class SwitchCell: UITableViewCell {
 extension ViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10
+        return 30
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -407,3 +363,4 @@ class ArrowCell: UITableViewCell {
         ])
     }
 }
+
