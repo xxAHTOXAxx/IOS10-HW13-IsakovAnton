@@ -28,7 +28,9 @@ extension Models {
     static var iconCustom: [[Models]] = [
         [
             .switchCell(cell: SwitchCells(
-                image: UIImage(systemName: "airplane")?.withTintColor(.white) ?? UIImage(),
+                image: UIImage(systemName: "airplane")?
+                    .withRenderingMode(.alwaysTemplate)
+                    .withTintColor(.white) ?? UIImage(),
                 name: "Авиарежим",
                 iconBackgroundColor: .systemOrange)),
         
@@ -40,7 +42,7 @@ extension Models {
             .optionCell(cell: OptionCells(
                 image: UIImage(named: "bluetooth")?.withTintColor(.white) ?? UIImage(),
                  name: "Bluetooth",
-                 iconBackgroundColor: .systemBlue, textLabel: nil)),
+                 iconBackgroundColor: .systemBlue, textLabel: "Вкл.")),
             
             .optionCell(cell: OptionCells(
                 image: UIImage(systemName: "antenna.radiowaves.left.and.right")?.withConfiguration(UIImage.SymbolConfiguration(weight: .semibold)) ?? UIImage(),
