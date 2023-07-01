@@ -28,88 +28,89 @@ extension Models {
     static var iconCustom: [[Models]] = [
         [
             .switchCell(cell: SwitchCells(
-                image: UIImage(systemName: "airplane")?
-                    .withRenderingMode(.alwaysTemplate)
-                    .withTintColor(.white) ?? UIImage(),
+                image: UIImage(named: "airplaneC") ?? UIImage(),
                 name: "Авиарежим",
                 iconBackgroundColor: .systemOrange)),
         
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "wifi.square") ?? UIImage(),
+                image: UIImage(named: "wifiC") ?? UIImage(),
                 name: "Wi-Fi",
-                iconBackgroundColor: nil, textLabel: "Не подключен")),
+                iconBackgroundColor: .systemBlue, textLabel: "Не подключен")),
             
             .optionCell(cell: OptionCells(
-                image: UIImage(named: "bluetooth")?.withTintColor(.white) ?? UIImage(),
+                image: UIImage(named: "bluetoothC")?.withTintColor(.white) ?? UIImage(),
                  name: "Bluetooth",
                  iconBackgroundColor: .systemBlue, textLabel: "Вкл.")),
             
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "antenna.radiowaves.left.and.right")?.withConfiguration(UIImage.SymbolConfiguration(weight: .semibold)) ?? UIImage(),
+                image: UIImage(named: "cellularC") ?? UIImage(),
                  name: "Сотовая связь",
                  iconBackgroundColor: .systemGreen, textLabel: nil)),
             
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "personalhotspot")?.withConfiguration(UIImage.SymbolConfiguration(weight: .bold)) ?? UIImage(),
+                image: UIImage(named: "personalhotspotС") ?? UIImage(),
                  name: "Режим модема",
                  iconBackgroundColor: .systemGreen, textLabel: nil)),
             
             .optionCell(cell: OptionCells(
-                image: UIImage(named: "vpn")?.withTintColor(.white) ?? UIImage(),
+                image: UIImage(named: "vpnC") ?? UIImage(),
                  name: "VPN",
                  iconBackgroundColor: .systemBlue, textLabel: "Не подключен")),
         ],
         [
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "bell")?.withTintColor(.white) ?? UIImage(),
+                image: UIImage(named: "bellC") ?? UIImage(),
                  name: "Уведомления",
-                 iconBackgroundColor: .systemOrange, textLabel: nil)),
+                 iconBackgroundColor: .systemRed, textLabel: nil)),
 
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "speaker") ?? UIImage(),
+                image: UIImage(named: "speakerC") ?? UIImage(),
                  name: "Звуки, тактильные сигналы",
                  iconBackgroundColor: .systemPink, textLabel: nil)),
             
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "wifi") ?? UIImage(),
+                image: UIImage(named: "moonC") ?? UIImage(),
                  name: "Не беспокоить",
                  iconBackgroundColor: .systemIndigo, textLabel: nil)),
             
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "wifi") ?? UIImage(),
+                image: UIImage(named: "hourglassС") ?? UIImage(),
                  name: "Экранное время",
                  iconBackgroundColor: .systemIndigo, textLabel: nil))
         ],
         [
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "wifi") ?? UIImage(),
+                image: UIImage(named: "settingC") ?? UIImage(),
                  name: "Основные",
                  iconBackgroundColor: .systemGray2, textLabel: nil)),
             
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "switch.2")?.withConfiguration(UIImage.SymbolConfiguration(weight: .regular)) ?? UIImage(),
+                image: UIImage(systemName: "switch.2")?.withTintColor(.white)
+                    .withRenderingMode(.alwaysOriginal)
+                    .withConfiguration(UIImage.SymbolConfiguration(weight: .regular))
+                    ?? UIImage(),
                  name: "Пункт управления",
                  iconBackgroundColor: .systemGray2, textLabel: nil)),
             
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "textformat.size")?.withConfiguration(UIImage.SymbolConfiguration(weight: .regular)) ?? UIImage(),
+                image: UIImage(named: "aaC") ?? UIImage(),
                  name: "Экран и яркость",
                  iconBackgroundColor: .systemBlue, textLabel: nil)),
             
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "wifi") ?? UIImage(),
+                image: UIImage(named: "homeC") ?? UIImage(),
                  name: "Экран «Домой»",
                  iconBackgroundColor: nil, textLabel: nil)),
             
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "wifi") ?? UIImage(),
+                image: UIImage(systemName: "") ?? UIImage(),
                  name: "Универсальный доступ",
                  iconBackgroundColor: .systemBlue, textLabel: nil)),
             
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "wifi") ?? UIImage(),
+                image: UIImage(named: "wallpaperС") ?? UIImage(),
                  name: "Обои",
-                 iconBackgroundColor: .systemCyan, textLabel: nil)),
+                 iconBackgroundColor: .systemBlue, textLabel: nil)),
 
             .optionCell(cell: OptionCells(
                 image: UIImage(named: "") ?? UIImage(),
@@ -117,29 +118,35 @@ extension Models {
                  iconBackgroundColor: nil, textLabel: nil)),
 
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "faceid") ?? UIImage(),
+                image: UIImage(systemName: "faceid")?.withTintColor(.white)
+                    .withRenderingMode(.alwaysOriginal)
+                    .withConfiguration(UIImage.SymbolConfiguration(weight: .regular))
+                    ?? UIImage(),
                  name: "Face ID код-пароль",
-                 iconBackgroundColor: .systemCyan, textLabel: nil)),
+                 iconBackgroundColor: .systemGreen, textLabel: nil)),
 
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "sos") ?? UIImage(),
+                image: UIImage(systemName: "sos")?.withTintColor(.white)
+                    .withRenderingMode(.alwaysOriginal)
+                    .withConfiguration(UIImage.SymbolConfiguration(weight: .regular))
+                    ?? UIImage(),
                  name: "Экстренный вызов - SoS",
                  iconBackgroundColor: .systemRed, textLabel: nil)),
 
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "wifi") ?? UIImage(),
+                image: UIImage(systemName: "") ?? UIImage(),
                  name: "Уведомление о контакте",
                  iconBackgroundColor: .white, textLabel: nil)),
             
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "battery.100") ?? UIImage(),
+                image: UIImage(named: "batteryC") ?? UIImage(),
                  name: "Аккумулятор",
                  iconBackgroundColor: .systemGreen, textLabel: nil)),
             
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "wifi") ?? UIImage(),
-                 name: "Конфиденциальность и безопасность",
-                 iconBackgroundColor: .systemBlue, textLabel: nil)),
+                image: UIImage(named: "stopC") ?? UIImage(),
+                 name: "Конфиденциальность\nи безопасность",
+                iconBackgroundColor: .systemBlue, textLabel: nil)),
         ]
     ]
 }
