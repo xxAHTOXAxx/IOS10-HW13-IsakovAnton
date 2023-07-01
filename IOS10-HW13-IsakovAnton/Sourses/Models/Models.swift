@@ -103,7 +103,7 @@ extension Models {
                  iconBackgroundColor: nil, textLabel: nil)),
             
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "") ?? UIImage(),
+                image: UIImage(named: "wallpaper") ?? UIImage(),
                  name: "Универсальный доступ",
                  iconBackgroundColor: .systemBlue, textLabel: nil)),
             
@@ -113,7 +113,7 @@ extension Models {
                  iconBackgroundColor: .systemBlue, textLabel: nil)),
 
             .optionCell(cell: OptionCells(
-                image: UIImage(named: "") ?? UIImage(),
+                image: UIImage(named: "siri") ?? UIImage(),
                  name: "Siri и Поиск",
                  iconBackgroundColor: nil, textLabel: nil)),
 
@@ -134,7 +134,7 @@ extension Models {
                  iconBackgroundColor: .systemRed, textLabel: nil)),
 
             .optionCell(cell: OptionCells(
-                image: UIImage(systemName: "") ?? UIImage(),
+                image: UIImage(systemName: "virus") ?? UIImage(),
                  name: "Уведомление о контакте",
                  iconBackgroundColor: .white, textLabel: nil)),
             
