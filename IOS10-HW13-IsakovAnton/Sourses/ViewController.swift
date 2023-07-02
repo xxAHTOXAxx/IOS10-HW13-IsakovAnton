@@ -19,9 +19,9 @@ class ViewController: UIViewController {
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
-        super.viewDidLoad ()
+        super.viewDidLoad()
         setupView()
-        setupHierarchy ()
+        setupHierarchy()
         setupLayout()
         sectionsData = Models.iconCustom
     }
@@ -48,6 +48,8 @@ class ViewController: UIViewController {
     }
 }
 
+// MARK: - UITableViewDataSource
+
 extension ViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -64,37 +66,37 @@ extension ViewController: UITableViewDataSource {
         
         switch model {
         case  let .switchCell(model):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "switchCell", for: indexPath) as! SwitchCell
-            cell.configuration(model: model)
-            return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "switchCell", for: indexPath) as? SwitchCell
+            cell?.configuration(model: model)
+            return cell ?? UITableViewCell()
         case let .optionCell(model):
-            let cell = tableView.dequeueReusableCell(withIdentifier: "arrowCell", for: indexPath) as! ArrowCell
-            cell.configuration(model: model)
-            return cell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "arrowCell", for: indexPath) as? ArrowCell
+            cell?.configuration(model: model)
+            return cell ?? UITableViewCell()
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+           30
+        }
+}
+
+// MARK: - UITableViewDelegate
+extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedModel = sectionsData[indexPath.section][indexPath.row]
-            
-            switch selectedModel {
-            case let .switchCell(model):
-                print("Выбрана ячейка SwitchCell с моделью: \(model)")
-            case let .optionCell(model):
-                print("Выбрана ячейка ArrowCell с моделью: \(model)")
-            }
-            
-            tableView.deselectRow(at: indexPath, animated: true)
+        
+        switch selectedModel {
+        case let .switchCell(model):
+            print("Выбрана ячейка SwitchCell с моделью: \(model.name)")
+        case let .optionCell(model):
+            print("Выбрана ячейка ArrowCell с моделью: \(model.name)")
+        }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
-extension ViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 30
-    }
-    
-}
 
 
 

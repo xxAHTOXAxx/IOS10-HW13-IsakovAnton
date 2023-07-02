@@ -1,14 +1,8 @@
-
 import UIKit
 
 enum Models {
     case switchCell(cell: SwitchCells)
     case optionCell(cell: OptionCells)
-    
-//    static func getData() -> [[Models]] {
-//
-//        return [[Models]]
-//    }
 }
 
 struct SwitchCells {

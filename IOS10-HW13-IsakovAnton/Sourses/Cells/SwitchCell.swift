@@ -7,7 +7,7 @@ class SwitchCell: UITableViewCell {
     
     private var isAirplaneModeEnabled = false
     
-    let iconImageView: UIImageView = {
+    private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 4
         imageView.clipsToBounds = true
@@ -15,17 +15,18 @@ class SwitchCell: UITableViewCell {
         return imageView
     }()
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let switchControl: UISwitch = {
-        let switchControl = UISwitch()
-        switchControl.translatesAutoresizingMaskIntoConstraints = false
-        return switchControl
-    }()
+    private lazy var switchControl: UISwitch = {
+            let switchControl = UISwitch()
+            switchControl.addTarget(self, action: #selector(airplaneModeSwitchValueChanged(_:)), for: .valueChanged)
+            switchControl.translatesAutoresizingMaskIntoConstraints = false
+            return switchControl
+        }()
     
     // MARK: - Initializers
     
