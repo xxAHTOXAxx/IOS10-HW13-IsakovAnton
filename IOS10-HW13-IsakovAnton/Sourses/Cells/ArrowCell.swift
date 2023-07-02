@@ -4,7 +4,8 @@ import UIKit
 class ArrowCell: UITableViewCell {
     
     // MARK: - Outlets
-    let iconImageView: UIImageView = {
+    
+    private let iconImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.layer.cornerRadius = 4
         imageView.clipsToBounds = true
@@ -12,26 +13,20 @@ class ArrowCell: UITableViewCell {
         return imageView
     }()
     
-    let titleLabel: UILabel = {
+    private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
-    let switchControl: UISwitch = {
-        let switchControl = UISwitch()
-        switchControl.translatesAutoresizingMaskIntoConstraints = false
-        return switchControl
-    }()
-    
-    let arrowImageView: UIImageView = {
+    private let arrowImageView: UIImageView = {
         let imageView = UIImageView(image: UIImage(systemName: "chevron.right"))
         imageView.tintColor = .systemGray
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
     
-    let additionalTextLabel: UILabel = {
+    private let additionalTextLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.lightGray
@@ -39,7 +34,7 @@ class ArrowCell: UITableViewCell {
         return label
     }()
     
-    let additionalTextLabelOnOff: UILabel = {
+    private let additionalTextLabelOnOff: UILabel = {
         let label = UILabel()
         label.font = UIFont.systemFont(ofSize: 14)
         label.textColor = UIColor.lightGray
@@ -95,8 +90,6 @@ class ArrowCell: UITableViewCell {
         iconImageView.image = model.image
         iconImageView.backgroundColor = model.iconBackgroundColor
         titleLabel.text = model.name
-        arrowImageView.isHidden = false
         additionalTextLabel.text = model.textLabel
-       
     }
 }
