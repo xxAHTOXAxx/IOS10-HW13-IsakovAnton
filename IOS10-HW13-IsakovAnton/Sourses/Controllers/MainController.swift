@@ -1,29 +1,23 @@
 import UIKit
 
-class ViewController: UIViewController {
+final class MainController: UIViewController {
     
     var sectionsData: [[Models]] = []
     
-    // MARK: - Outlets
+    private var mainView: MainView? {
+        guard isViewLoaded else { return nil }
+        return view as? MainView
+    }
     
-    private lazy var tableView: UITableView = {
-        let tableView = UITableView(frame: .zero, style: .insetGrouped)
-        tableView.register(SwitchCell.self, forCellReuseIdentifier: "switchCell")
-        tableView.register(ArrowCell.self, forCellReuseIdentifier: "arrowCell")
-        tableView.dataSource = self
-        tableView.delegate = self
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        return tableView
-    }()
-    
-    // MARK: - Lifecycle
+    // MARK: - LifeStyle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view = MainView()
         setupView()
         setupHierarchy()
-        setupLayout()
-        sectionsData = Models.iconCustom
+        mainView?.setupLayout()
+        setting()
     }
     
     // MARK: - Private functions
@@ -35,22 +29,20 @@ class ViewController: UIViewController {
     }
     
     private func setupHierarchy() {
-        view.addSubview(tableView)
+        view.addSubview(mainView?.tableView ?? UITableView())
     }
     
-    private func setupLayout() {
-        NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: view.topAnchor),
-            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-        ])
+    private func setting() {
+        sectionsData = Models.iconCustom
+        mainView?.tableView.dataSource = self
+        mainView?.tableView.delegate = self
     }
+    
 }
 
 // MARK: - UITableViewDataSource
 
-extension ViewController: UITableViewDataSource {
+extension MainController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         sectionsData.count
@@ -77,12 +69,12 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-           30
-        }
+        30
+    }
 }
 
 // MARK: - UITableViewDelegate
-extension ViewController: UITableViewDelegate {
+extension MainController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedModel = sectionsData[indexPath.section][indexPath.row]
         
@@ -96,7 +88,3 @@ extension ViewController: UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
     }
 }
-
-
-
-
